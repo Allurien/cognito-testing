@@ -1,0 +1,12 @@
+@import '../../styles/_var.scss';
+
+.sidenav-container {
+    height: 100vh;
+    .chXdSi {
+        margin-top: 15px;
+        .nav-item {
+            display: flex;
+            align-content: center;
+        }
+    }
+}

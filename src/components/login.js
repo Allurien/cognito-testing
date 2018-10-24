@@ -35,8 +35,8 @@ class Login extends React.Component {
         try {
             await Auth.signIn(this.state.email, this.state.password);
             alert("Logged in");
-        } catch (e) {
             this.props.userHasAuthenticated(true);
+        } catch (e) {
             console.log(e.message);
         }
     }
