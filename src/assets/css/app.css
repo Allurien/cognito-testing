@@ -1,8 +1,3 @@
-@font-face {
-    font-family: quest;
-    src: url(../fonts/quest.ttf);
-}
-
 body {
     margin: 0;
 }
@@ -23,21 +18,8 @@ body {
 
 .app h1 {
     color: #61DAFB;
-    font-size: 5em;
+    font-size: 3em;
     letter-spacing: 5px;
     margin: 0.16em;
     text-shadow: 2px 2px 0 #FFF;
-}
-
-.rotate {
-    animation: spin 10s linear infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
 }
