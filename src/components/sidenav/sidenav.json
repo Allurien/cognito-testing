@@ -1,0 +1,58 @@
+[
+    {
+        "navPath": "/device-directory",
+        "icon": "list_alt",
+        "id": "1",
+        "title": "Device Directory",
+        "groups": ["Admins", "OrgAdmin", "Users"]
+    },
+    {
+        "navPath": "/provision",
+        "icon": "library_add",
+        "id": "2",
+        "title": "Provision Device",
+        "groups": ["Admins", "OrgAdmin"]
+    },
+    {
+        "navPath": "/bulk-provision",
+        "icon": "cloud_upload",
+        "id": "3",
+        "title": "Bulk Provision",
+        "groups": ["Admins", "OrgAdmin"]
+    },
+    {
+        "navPath": "/add-template",
+        "icon": "note_add",
+        "id": "4",
+        "title": "Add Template",
+        "groups": ["Admins", "OrgAdmin"]
+    },
+    {
+        "navPath": "/template-manager",
+        "icon": "description",
+        "id": "6",
+        "title": "Template Manager",
+        "groups": ["Admins", "OrgAdmin"]
+    },
+    {
+        "navPath": "/add-user",
+        "icon": "person_add",
+        "id": "7",
+        "title": "Add User",
+        "groups": ["Admins", "OrgAdmin"]
+    },
+    {
+        "navPath": "/add-org",
+        "icon": "group_add",
+        "id": "8",
+        "title": "Add Organization",
+        "groups": ["Admins"]
+    },
+    {
+        "navPath": "/org-manager",
+        "icon": "group_work",
+        "id": "9",
+        "title": "Org Manager",
+        "groups": ["Admins", "OrgAdmin", "Users"]
+    }
+]
