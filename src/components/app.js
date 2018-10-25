@@ -1,10 +1,10 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
+import { withRouter } from "react-router-dom";
 import '../assets/css/app.css';
 import Routes from "./Routes";
-import ButtonAppBar from "./navbar/nav";
 import Sidenav from './sidenav';
 import Button from '@material-ui/core/Button';
-import Amplify, { Auth } from "aws-amplify";
+import { Auth } from "aws-amplify";
 
 class App extends Component {
     constructor(props){
@@ -18,10 +18,7 @@ class App extends Component {
     async componentWillMount() {
         try {
             await Auth.currentSession()
-            .then((user)=>{
-                    this.setState({userGroup: user.accessToken.payload['cognito:groups']});
-                });
-                this.userHasAuthenticated(true);
+            this.userHasAuthenticated(true);
         }
         catch(e) {
             if (e !== 'No current user') {
@@ -37,6 +34,7 @@ class App extends Component {
     handleLogout = async event => {
         await Auth.signOut();
         this.userHasAuthenticated(false);
+        this.props.history.push("/login");
     }
     render (){
         const childProps = {
@@ -47,7 +45,6 @@ class App extends Component {
             !this.state.isAuthenticating &&
             <div>
                 <Sidenav />
-                <ButtonAppBar />
                 {this.state.isAuthenticated
                 ? <Button href="/" color="inherit" onClick={this.handleLogout}>Logout</Button>
                 : <Button href="/login" color="inherit">Login</Button>
@@ -58,4 +55,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withRouter(App);

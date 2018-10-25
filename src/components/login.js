@@ -21,13 +21,6 @@ class Login extends React.Component {
             this.setState({
                 [event.target.id]: event.target.value
             });
-        // const target = event.target;
-        // const value = target.value;
-        // const name = target.name;
-        // console.log(name);
-        // this.setState({
-        //     [name]: value
-        // });
     }
 
     handleSubmit = async event => {
@@ -36,6 +29,7 @@ class Login extends React.Component {
             await Auth.signIn(this.state.email, this.state.password);
             alert("Logged in");
             this.props.userHasAuthenticated(true);
+            this.props.history.push("/");
         } catch (e) {
             console.log(e.message);
         }
