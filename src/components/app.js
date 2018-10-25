@@ -5,22 +5,23 @@ import ButtonAppBar from "./navbar/nav";
 import Sidenav from './sidenav';
 import Button from '@material-ui/core/Button';
 import Amplify, { Auth } from "aws-amplify";
-// import Login from './login';
-// import {Route, Switch} from 'react-router-dom';
 
 class App extends Component {
     constructor(props){
         super(props);
         this.state = {
             isAuthenticated: false,
-            isAuthenticating: true
+            isAuthenticating: true,
+            userGroup: []
         };
     }
     async componentWillMount() {
-        console.log('state', this.state);
         try {
-            await Auth.currentSession();
-            this.userHasAuthenticated(true);
+            await Auth.currentSession()
+            .then((user)=>{
+                    this.setState({userGroup: user.accessToken.payload['cognito:groups']});
+                });
+                this.userHasAuthenticated(true);
         }
         catch(e) {
             if (e !== 'No current user') {
@@ -28,12 +29,13 @@ class App extends Component {
             }
         }
         this.setState({ isAuthenticating: false });
-        console.log('state', this.state);
     }
     userHasAuthenticated = authenticated => {
         this.setState({ isAuthenticated: authenticated });
     }
-    handleLogout = event => {
+
+    handleLogout = async event => {
+        await Auth.signOut();
         this.userHasAuthenticated(false);
     }
     render (){
@@ -51,9 +53,6 @@ class App extends Component {
                 : <Button href="/login" color="inherit">Login</Button>
                 }
                 <Routes childProps={childProps} />
-                {/* <Switch>
-                    <Route childProps={childProps} path="/login" exact component={Login} />
-                </Switch> */}
             </div>
         )
     }
