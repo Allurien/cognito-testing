@@ -1,0 +1,23 @@
+[
+    {
+        "navPath": "/admins",
+        "icon": "list_alt",
+        "id": "1",
+        "title": "Admins",
+        "groups": ["Admins"]
+    },
+    {
+        "navPath": "/mid-level",
+        "icon": "library_add",
+        "id": "2",
+        "title": "Mid-Level",
+        "groups": ["Admins", "OrgAdmin"]
+    },
+    {
+        "navPath": "/users",
+        "icon": "cloud_upload",
+        "id": "3",
+        "title": "Users",
+        "groups": ["Admins", "OrgAdmin", "Users"]
+    }
+]

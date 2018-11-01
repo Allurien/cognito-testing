@@ -1,13 +1,13 @@
 [
     {
-        "navPath": "/device-directory",
+        "navPath": "/users",
         "icon": "list_alt",
         "id": "1",
         "title": "Device Directory",
         "groups": ["Admins", "OrgAdmin", "Users"]
     },
     {
-        "navPath": "/provision",
+        "navPath": "/mid-level",
         "icon": "library_add",
         "id": "2",
         "title": "Provision Device",
@@ -42,7 +42,7 @@
         "groups": ["Admins", "OrgAdmin"]
     },
     {
-        "navPath": "/add-org",
+        "navPath": "/admins",
         "icon": "group_add",
         "id": "8",
         "title": "Add Organization",
