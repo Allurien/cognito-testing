@@ -25,6 +25,7 @@ class AddUser extends React.Component {
             org: '',
             dept: '',
             userRole: '',
+            userName: '',
             value: { name: '', touched: false },
             disable: false,
         }
@@ -33,15 +34,12 @@ class AddUser extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.confirmUser = this.confirmUser.bind(this);
         this.addUserToGroup = this.addUserToGroup.bind(this);
-        
     }
     componentDidMount(){
         var cognitoUser = Auth.currentAuthenticatedUser();
         if (cognitoUser != null) {
             Auth.currentSession()
             .then((user)=>{
-                console.log('You are now logged in.');
-                
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                     IdentityPoolId: 'us-east-2:cf60b0de-94d4-4ad8-9933-84266ceb57e0',
                     AccountId: '932171880994',
@@ -49,22 +47,18 @@ class AddUser extends React.Component {
                         'cognito-idp.us-east-2.amazonaws.com/us-east-2_bE2hNqmyh': user.getIdToken().getJwtToken(),
                     }
                 });
-                
                 AWS.config.credentials.refresh((error) => {
                     if (error) {
                         console.error(error);
                     } else {
                         console.log('Successfully logged!');
-                        console.log('creds',AWS.config.credentials);
                     }
                     });
                     var config = new AWS.Config({
                         accessKeyId: user.accessKeyId,
                         secretAccessKey: user.secretAccessKey,
                         region: 'us-west-2'
-                      });
-                      console.log('config', config)
-                    
+                    });
             }
             );
         }
@@ -83,7 +77,7 @@ class AddUser extends React.Component {
         this.setState({ [name]: event.target.checked });
     };
 
-    confirmUser(){
+    async confirmUser(){
         const cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
         let confirmParams={
             UserPoolId: config.cognito.USER_POOL_ID,
@@ -91,10 +85,10 @@ class AddUser extends React.Component {
         }
         cognitoidentityserviceprovider.adminConfirmSignUp(confirmParams, function(err, data) {
             if (err) console.log(err, err.stack);
-            else     console.log(data);
-        });
-        this.addUserToGroup();
-        
+            console.log('confirmed', data);
+        })
+        console.log('state', this.state);
+        await this.addUserToGroup();
     }
 
     addUserToGroup(){
@@ -102,11 +96,12 @@ class AddUser extends React.Component {
         let groupParams={
             GroupName: this.state.userRole,
             UserPoolId: config.cognito.USER_POOL_ID,
-            Username: this.state.email
+            Username: this.state.userName
         }
+        console.log(groupParams)
         cognitoidentityserviceprovider.adminAddUserToGroup(groupParams, function(err, data) {
             if (err) console.log(err, err.stack);
-            else     console.log(data);
+            else     console.log('data', data);
         });
     }
 
@@ -133,8 +128,10 @@ class AddUser extends React.Component {
                 // 'custom:group': this.state.userRole
             }
             })
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+            .then(data => {console.log('signup', data)
+            this.setState({userName:data.userSub})})
+            .then(console.log('state', this.state))
+            .catch(err => console.log('error', err));
             this.confirmUser();
 
         // API.addUser(newUser)
@@ -218,11 +215,11 @@ class AddUser extends React.Component {
                                                 input={<Input name="userRole" id="user-role" />}
                                                 >
                                                 <MenuItem value=""><em>None</em></MenuItem>
-                                                <MenuItem value="SystemAdmin">Super User</MenuItem>
-                                                <MenuItem value="CustomerAdmin">Org Admin</MenuItem>
-                                                <MenuItem value="CustomerViewer">Org User</MenuItem>
-                                                <MenuItem value="ResellerAdmin">Reseller Admin</MenuItem>
-                                                <MenuItem value="ResellerViewer">Reseller User</MenuItem>
+                                                <MenuItem value="Admins">Super User</MenuItem>
+                                                <MenuItem value="OrgAdmin">Org Admin</MenuItem>
+                                                <MenuItem value="Users">Org User</MenuItem>
+                                                <MenuItem value="Admins">Reseller Admin</MenuItem>
+                                                <MenuItem value="Users">Reseller User</MenuItem>
                                             </Select>
                                         </Row>
                                     </Col>

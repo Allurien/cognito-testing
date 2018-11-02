@@ -48,8 +48,6 @@ class App extends Component {
         await Auth.currentSession()
         .then((user)=>{
             this.setState({userGroup: user.accessToken.payload['cognito:groups'], loggedIn: true});
-            console.log(user);
-            console.log(this.state)
         });
     }
 
